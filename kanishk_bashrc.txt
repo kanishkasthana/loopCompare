@@ -1,0 +1,74 @@
+# .bashrc
+
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+	. /etc/bashrc
+fi
+
+# User specific aliases and functions
+
+# added by Anaconda 2.2.0 installer
+export PATH="/home/kanishk/software/anaconda/bin:$PATH"
+
+
+
+# added by Kanishk Asthana to make wget work
+http_proxy="http://mizar.ucsd.edu:4254"
+
+export http_proxy
+
+export HTTP_PROXY="http://mizar.ucsd.edu:4254"
+
+export HTTPS_PROXY="http://mizar.ucsd.edu:4254"
+
+# added by Kanishk Asthana to make wget work
+https_proxy="http://mizar.ucsd.edu:4254"
+
+export https_proxy
+
+#added by Kanishk Asthana to make wget work
+ftp_proxy="http://mizar.ucsd.edu:4254"
+
+export ftp_proxy
+
+#Added by Kanishk Asthana to try to make git work
+git config --global http.proxy http://mizar.ucsd.edu:4254
+
+#Added by Kanishk Asthana to try to make git work
+git config --global https.proxy http://mizar.ucsd.edu:4254
+
+# added by Kanishk Asthana to Include MACS2 in the list of softwares I can use
+export PATH="/home/kanishk/software/MACS2/bin:$PATH"
+export PYTHONPATH="/home/kanishk/software/MACS2/lib/python2.7/site-packages:$PYTHONPATH"
+
+#added by Kanishk Asthana to Include R in the list of softwares I can use
+
+export PATH="/home/kanishk/software/R-patched/bin:$PATH"
+
+# added by Kanishk Asthana to Include bedtool2
+
+export PATH="/home/kanishk/software/bedtools2/bin:$PATH"
+
+# added by Kanishk Asthana to include the latest version of curl
+export PATH="/home/kanishk/software/curl/bin:$PATH"
+
+# added by Kanishk Asthana to include git
+export PATH="/home/kanishk/software/git/bin:$PATH"
+
+# added by Kanishk Asthana to include homer
+export PATH="/home/kanishk/software/homer/bin:$PATH"
+
+# added by Kanishk Asthana to include zlib
+export PATH="/home/kanishk/software/zlib/lib:$PATH"
+export PATH="/home/kanishk/software/zlib/include:$PATH"
+
+# added by Kanishk Asthana to include bzip2
+
+#added by Kanishk Asthana to include bcftools
+export PATH="/home/kanishk/software/bcftools/bin:$PATH"
+
+#added by Kanishk Asthana to include htslib
+export PATH="/home/kanishk/software/htslib/bin:$PATH"
+
+#added by Kanishk Asthana to include samtools
+export PATH="/home/kanishk/software/samtools/bin:$PATH"
