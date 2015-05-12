@@ -45,9 +45,12 @@ hist(log10(domainLengths),100)
 
 #Increasing range of CTCF peaks for comparison with topological domain boundaries
 increasedRange=cbind((orderedCTCFXPeaks$V2-7500),(orderedCTCFXPeaks$V3+7500))
+#Replacing peaks ENCODE peaks with HOMER peaks
+homerPeaksX=homerPeaks[homerPeaks$chr=="chrX",]
+increasedRange=cbind((homerPeaksX$start-7500),(homerPeaksX$end+7500));
 
 #A constant shift of 2000 units seems to work
-val=((increasedRange[,2]-increasedRange[,1])-peaklengths)
+#val=((increasedRange[,2]-increasedRange[,1])-peaklengths)
 domainsX=arrowheadDomains[arrowheadDomains$chr1=="X",c(2,3)]
 domainsX=domainsX[order(domainsX$x1),]
 uniquedomainsX=unique(as.numeric(cbind(domainsX$x1,domainsX$x2)))
