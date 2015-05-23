@@ -70,9 +70,17 @@ public class LoopPrediction {
             PrintWriter out= new PrintWriter(new FileWriter("predictedLoops.txt"));
             out.println("START\tEND");
             for(edge e:allEdges){
-                out.print(Math.abs(e.getParent().getPeakNumber()));
-                out.print("\t");
-                out.println(Math.abs(e.getChild().getPeakNumber()));
+                
+                if(Math.abs(e.getParent().getPeakNumber())<=Math.abs(e.getChild().getPeakNumber())){
+                    out.print(Math.abs(e.getParent().getPeakNumber()));
+                    out.print("\t");
+                    out.println(Math.abs(e.getChild().getPeakNumber()));
+                }
+                else{
+                    out.print(Math.abs(e.getChild().getPeakNumber()));
+                    out.print("\t");
+                    out.println(Math.abs(e.getParent().getPeakNumber()));
+                }
             }
             
             out.close();
