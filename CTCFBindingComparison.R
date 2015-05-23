@@ -76,7 +76,7 @@ uniqueLoopsX=unique(as.numeric(cbind(loopsX$x1,loopsX$x2)))
 uniqueLoopsX=uniqueLoopsX[order(uniqueLoopsX)]
 
 #Uncomment the line below to see what result you get for a control set (which is boundaries have been shifted)
-uniqueLoopsX=uniqueLoopsX + 1000000
+#uniqueLoopsX=uniqueLoopsX + 1000000
 uniqueLoopsXRange=cbind((uniqueLoopsX-10000),(uniqueLoopsX+10000))
 intervaluniqueLoopsX=Intervals(uniqueLoopsXRange)
 #Getting percentage of unique loop sites that actually overlap with CTCF sites:
