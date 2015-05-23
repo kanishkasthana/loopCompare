@@ -132,3 +132,7 @@ processedPeaks=apply(cbind(homerPeaksX$start,homerPeaksX$strand),1,function(peak
 });
 
 write.table(processedPeaks,file="processedPeaks.txt",quote=FALSE, col.name=FALSE,row.names=FALSE, sep="\t")
+
+#Reading predicted Loops from algorithm
+
+predictedLoops=read.table("predictedLoops.txt",header=TRUE);
