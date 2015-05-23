@@ -6,6 +6,7 @@
 package loopprediction;
 import java.io.*;
 import java.util.*;
+import java.lang.Math;
 
 /**
  *
@@ -33,7 +34,48 @@ public class LoopPrediction {
                 long peakNumber=Long.parseLong(text);
                 allVertices.add(new node(peakNumber));
             }
+            List <edge>allEdges=new <edge>ArrayList();
+            boolean up=false;
+            boolean down=false;
+            node prev=null;
+            int count=0;
+            for(node vertex:allVertices){
+                count++;
+                if(vertex.getPeakNumber()>0){
+                    if(down){
+                        allEdges.add(new edge(vertex,prev,0));
+                        prev=null;
+                        down=false;
+                    }
+                    else if(!up){
+                        up=true;
+                        prev=vertex;
+                    }
+                }
+                else if(vertex.getPeakNumber()<=0){
+                    if(up){
+                        allEdges.add(new edge(prev,vertex,0));
+                        prev=null;
+                        up=false;
+                    }
+                    else if(!down){
+                        down=true;
+                        prev=vertex;
+                    }
+                    
+                }
+            }
             
+            //Printing out Start and End predicted Loops
+            PrintWriter out= new PrintWriter(new FileWriter("predictedLoops.txt"));
+            out.println("START\tEND");
+            for(edge e:allEdges){
+                out.print(Math.abs(e.getParent().getPeakNumber()));
+                out.print("\t");
+                out.println(Math.abs(e.getChild().getPeakNumber()));
+            }
+            
+            out.close();
         
         }
         catch(Exception e){
