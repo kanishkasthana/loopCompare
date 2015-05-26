@@ -39,8 +39,8 @@ peaklengths=orderedCTCFXPeaks$V3-orderedCTCFXPeaks$V2
 hist(peaklengths,500)
 
 #So peaks merging with each other or that the same peak is counted as two peaks is not really a problem
+#because very few peaks are really close to each other
 print(sum(peakdistances<5000))
-
 domainLengths=arrowheadDomains$x2-arrowheadDomains$x1
 hist(log10(domainLengths),100)
 
@@ -134,5 +134,51 @@ processedPeaks=apply(cbind(homerPeaksX$start,homerPeaksX$strand),1,function(peak
 write.table(processedPeaks,file="processedPeaks.txt",quote=FALSE, col.name=FALSE,row.names=FALSE, sep="\t")
 
 #Reading predicted Loops from algorithm
+predictedLoops = read.table("predictedLoops.txt",header=TRUE);
 
-predictedLoops=read.table("predictedLoops.txt",header=TRUE);
+#Creating intervals for both Start and End of loops in the X chromosome
+
+#Loops length distribution total0
+hist(log10(loopsList$y1-loopsList$x1),100)
+
+#Introducing shift value as control
+shift=0;
+
+loopsXStartRange=cbind((loopsX$x1+shift),(loopsX$x2+shift));
+XStartRange=Intervals(loopsXStartRange);
+loopsXEndRange=cbind((loopsX$y1+shift),(loopsX$y2+shift));
+XEndRange=Intervals(loopsXEndRange);
+
+predictedLoopsXStartRange=cbind((predictedLoops$START-7500),(predictedLoops$START+7500));
+predictedStartInterval=Intervals(predictedLoopsXStartRange);
+
+predictedLoopsXEndRange=cbind((predictedLoops$END-7500),(predictedLoops$END+7500));
+predictedEndInterval=Intervals(predictedLoopsXEndRange);
+
+#Vector of CTCF Loops Start Prediction positions that match with predicted start vector for loops
+startListVector=as.list(interval_overlap(XStartRange,predictedStartInterval));
+
+#Vector of CTCF loops End prediction positions that match with predicted end vector for loops
+endListVector=as.list(interval_overlap(XEndRange,predictedEndInterval));
+
+#A vector to store index of commond predicted and experiemental loops
+commonLoops=vector("list",length=length(startListVector));
+
+for(i in 1:length(startListVector)){
+  lst1=unlist(startListVector[i]);
+  lst2=unlist(endListVector[i]);
+  intrsct=as.list(intersect(lst1,lst2))
+  commonLoops[i]=as.list(NA)
+  if(length(intrsct)>0){
+    commonLoops[i]=as.list(intersect(lst1,lst2))
+  }
+  
+}
+
+#Number acurately predicted for experimental data
+logicalVectorOfCommonLoops=!sapply(commonLoops,is.na)
+
+print("Number of Common Loops:");
+print(sum(logicalVectorOfCommonLoops))
+
+#
