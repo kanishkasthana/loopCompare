@@ -169,7 +169,7 @@ def smallest_edge(vertices,k):
                 min_indices = (i, i + 1)
     return min_edge, min_indices   
 
-def greedy_matching(vertices,k=1):#k chosen here is equal to mean peak length from x chromosome data
+def greedy_matching(vertices,k=1400):#k chosen here is equal to mean peak length from x chromosome data
     global count
     matching = Matching()
     done = False
