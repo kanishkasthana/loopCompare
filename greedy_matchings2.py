@@ -1,4 +1,5 @@
 from sys import argv
+import csv
 
 recursiveCount = 0
 count = 0
@@ -206,11 +207,17 @@ if __name__ == '__main__':
     fname = argv[1]
     vertices = parse_file(fname)
     matching = greedy_matching(vertices)
-    print "START\tEND"
+    outlist=list();
+
     for tuple in matching.get_edges():
         tuple=map(abs,tuple)
         t=map(str,sorted(tuple))
-        print "\t".join(t)
+        outlist.append(t)
 
+    with open("predictedLoops2.csv","w") as out:
+        csv_out=csv.writer(out)
+        csv_out.writerow(['START','END'])
+        for row in outlist:
+            csv_out.writerow(row)
 
 
