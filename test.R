@@ -1,2 +1,2 @@
 #
-test2=read.table("predictedLoops2.txt")
+test2=read.csv("predictedLoops2.csv", header=TRUE)
