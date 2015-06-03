@@ -40,7 +40,7 @@ loopBoundaries=loopBoundaries[order(abs(loopBoundaries))]
 write.table(loopBoundaries,file="processedLoopBoundaries.txt",quote=FALSE, col.name=FALSE,row.names=FALSE, sep="\t")
 
 #Reading predicted Loops from algorithm
-predictedLoops = read.table("predictedLoopsFromLoopBoundaries.txt",header=TRUE);
+predictedLoops = read.csv("predictedLoopsFromLoopBoundaries2.csv",header=TRUE);
 
 shift =0
 
