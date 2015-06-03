@@ -214,7 +214,7 @@ if __name__ == '__main__':
         t=map(str,sorted(tuple))
         outlist.append(t)
 
-    with open("predictedLoops2.csv","w") as out:
+    with open("predictedLoopsFromLoopBoundaries2.csv","w") as out:
         csv_out=csv.writer(out)
         csv_out.writerow(['START','END'])
         for row in outlist:
