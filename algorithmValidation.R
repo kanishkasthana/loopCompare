@@ -39,3 +39,49 @@ loopBoundaries=loopBoundaries[order(abs(loopBoundaries))]
 #Now we have the vector we want to export to test our algorithm with
 write.table(loopBoundaries,file="processedLoopBoundaries.txt",quote=FALSE, col.name=FALSE,row.names=FALSE, sep="\t")
 
+#Reading predicted Loops from algorithm
+predictedLoops = read.table("predictedLoopsFromLoopBoundaries.txt",header=TRUE);
+
+shift =0
+
+loopsXStartRange=cbind((loopsX$x1+shift),(loopsX$x2+shift));
+XStartRange=Intervals(loopsXStartRange);
+loopsXEndRange=cbind((loopsX$y1+shift),(loopsX$y2+shift));
+XEndRange=Intervals(loopsXEndRange);
+
+predictedLoopsXStartRange=cbind((predictedLoops$START-5000),(predictedLoops$START+5000));
+predictedStartInterval=Intervals(predictedLoopsXStartRange);
+
+predictedLoopsXEndRange=cbind((predictedLoops$END-5000),(predictedLoops$END+5000));
+predictedEndInterval=Intervals(predictedLoopsXEndRange);
+
+#Vector of CTCF Loops Start Prediction positions that match with predicted start vector for loops
+startListVector=as.list(interval_overlap(XStartRange,predictedStartInterval));
+
+#Vector of CTCF loops End prediction positions that match with predicted end vector for loops
+endListVector=as.list(interval_overlap(XEndRange,predictedEndInterval));
+
+#A vector to store index of commond predicted and experiemental loops
+commonLoops=vector("list",length=length(startListVector));
+
+for(i in 1:length(startListVector)){
+  lst1=unlist(startListVector[i]);
+  lst2=unlist(endListVector[i]);
+  intrsct=as.list(intersect(lst1,lst2))
+  commonLoops[i]=as.list(NA)
+  if(length(intrsct)>0){
+    commonLoops[i]=as.list(intersect(lst1,lst2))
+  }
+  
+}
+
+#Number acurately predicted for experimental data
+logicalVectorOfCommonLoops=!sapply(commonLoops,is.na)
+
+print("Number of Common Loops:");
+print(sum(logicalVectorOfCommonLoops))
+
+print("Percentage shown to be correct:")
+print(sum(logicalVectorOfCommonLoops)/nrow(loopsX))
+
+
