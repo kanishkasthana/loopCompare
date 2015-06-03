@@ -21,7 +21,7 @@ public class LoopPrediction {
         try{
             System.out.println(System.getProperty("user.dir"));
             List<String> inputs= new <String>ArrayList();
-            File newFile=new File("processedPeaks.txt");
+            File newFile=new File("processedLoopBoundaries.txt");
             FileReader fileReader=new FileReader(newFile);
             BufferedReader reader=new BufferedReader(fileReader);
             String line = null;
@@ -67,7 +67,7 @@ public class LoopPrediction {
             }
             
             //Printing out Start and End predicted Loops
-            PrintWriter out= new PrintWriter(new FileWriter("predictedLoops.txt"));
+            PrintWriter out= new PrintWriter(new FileWriter("predictedLoopsFromLoopBoundaries.txt"));
             out.println("START\tEND");
             for(edge e:allEdges){
                 
