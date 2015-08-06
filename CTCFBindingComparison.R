@@ -57,13 +57,13 @@ domainsX=domainsX[order(domainsX$x1),]
 uniquedomainsX=unique(as.numeric(cbind(domainsX$x1,domainsX$x2)))
 
 #Uncomment the result below to check what percentage enrichement you see for the control set (which is boundaries have been shifted)
-#uniquedomainsX=uniquedomainsX+1000000
+uniquedomainsX=uniquedomainsX+1000000
 
 #Taking the same numbers twice to show that the intervals are actually wait I can extend the topological domains instead of 
 #The chip seq peaks right. Hmm that kind of makes sense. Lets do this first and see what we get.
 #+/- 10kb chosen for the domain and loop boundaries because this is the resolution at which the domain boundaries were
 #actually called, which is pretty freaking intersting dude.
-intervalsuniqueDomainsX=Intervals(cbind((uniquedomainsX-10000),(uniquedomainsX+10000)))
+intervalsuniqueDomainsX=Intervals(cbind((uniquedomainsX-5000),(uniquedomainsX+5000)))
 intervalspeaksX=Intervals(increasedRange)
 percentageofboundariesatCTCFpeaks=length(unique(unlist(as.list(interval_overlap(intervalspeaksX,intervalsuniqueDomainsX)))))/length(uniquedomainsX)
 print("Percentage of TAD boundaries that overlap with CTCF peaks")
@@ -76,8 +76,8 @@ uniqueLoopsX=unique(as.numeric(cbind(loopsX$x1,loopsX$x2)))
 uniqueLoopsX=uniqueLoopsX[order(uniqueLoopsX)]
 
 #Uncomment the line below to see what result you get for a control set (which is boundaries have been shifted)
-#uniqueLoopsX=uniqueLoopsX + 1000000
-uniqueLoopsXRange=cbind((uniqueLoopsX-10000),(uniqueLoopsX+10000))
+uniqueLoopsX=uniqueLoopsX + 1000000
+uniqueLoopsXRange=cbind((uniqueLoopsX-5000),(uniqueLoopsX+5000))
 intervaluniqueLoopsX=Intervals(uniqueLoopsXRange)
 #Getting percentage of unique loop sites that actually overlap with CTCF sites:
 # The as.list function here is really important. Because of that we can use the lapply function in R

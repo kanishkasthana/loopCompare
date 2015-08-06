@@ -2,7 +2,7 @@
 # Script for testing the validity of the algorithm that I have designed.
 # The basic logic of the validation is as follows:
 
-require("genomeIntervals")
+require("intervals")
 loopsList=read.table("GSE63525_IMR90_HiCCUPS_looplist.txt", header=TRUE)
 
 print("Number of loops in X chromosome")
@@ -17,6 +17,11 @@ loopsX=loopsList[loopsList$chr1=="X",]
 #Creating loop Pairs
 loopPairs=as.matrix(loopsX[,c(2,5)])
 
+
+#Optimizing Script to get a distribution of percentage values.
+
+
+percentVector=sapply(1:5000,function(val){
 #Creating a distribution where we designate either the start of the end of the loop to be on the positive strand
 
 strand=sample(0:1,nrow(loopPairs),replace=TRUE)
@@ -38,6 +43,9 @@ loopBoundaries=loopBoundaries[order(abs(loopBoundaries))]
 
 #Now we have the vector we want to export to test our algorithm with
 write.table(loopBoundaries,file="processedLoopBoundaries.txt",quote=FALSE, col.name=FALSE,row.names=FALSE, sep="\t")
+
+#Running Second Python Greedy Algorithm Script from R. This is the super awesome Part
+system("python greedy_matchings2.py processedLoopBoundaries.txt", intern=TRUE)
 
 #Reading predicted Loops from algorithm
 predictedLoops = read.csv("predictedLoopsFromLoopBoundaries2.csv",header=TRUE);
@@ -78,10 +86,15 @@ for(i in 1:length(startListVector)){
 #Number acurately predicted for experimental data
 logicalVectorOfCommonLoops=!sapply(commonLoops,is.na)
 
-print("Number of Common Loops:");
-print(sum(logicalVectorOfCommonLoops))
+#print("Number of Common Loops:");
+#print(sum(logicalVectorOfCommonLoops))
 
-print("Percentage shown to be correct:")
-print(sum(logicalVectorOfCommonLoops)/nrow(loopsX))
+#print("Percentage shown to be correct:")
+percent=sum(logicalVectorOfCommonLoops)/nrow(loopsX)
+print(percent)
+return(percent)
 
+});
+
+hist(percentVector,100)
 
