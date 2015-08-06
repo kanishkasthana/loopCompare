@@ -21,7 +21,7 @@ loopPairs=as.matrix(loopsX[,c(2,5)])
 #Optimizing Script to get a distribution of percentage values.
 
 
-percentVector=sapply(1:5000,function(val){
+percentVector=sapply(1:1000,function(val){
 #Creating a distribution where we designate either the start of the end of the loop to be on the positive strand
 
 strand=sample(0:1,nrow(loopPairs),replace=TRUE)
