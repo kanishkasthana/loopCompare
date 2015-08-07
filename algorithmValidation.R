@@ -44,11 +44,11 @@ loopBoundaries=loopBoundaries[order(abs(loopBoundaries))]
 #Now we have the vector we want to export to test our algorithm with
 write.table(loopBoundaries,file="processedLoopBoundaries.txt",quote=FALSE, col.name=FALSE,row.names=FALSE, sep="\t")
 
-#Running Second Python Greedy Algorithm Script from R. This is the super awesome Part
-system("python greedy_matchings2.py processedLoopBoundaries.txt", intern=TRUE)
+#Running First Java Algorithm Script from R.
+system("java -jar loopPrediction.jar", intern=TRUE )
 
 #Reading predicted Loops from algorithm
-predictedLoops = read.csv("predictedLoopsFromLoopBoundaries2.csv",header=TRUE);
+predictedLoops = read.table("predictedLoopsFromLoopBoundaries.txt",header=TRUE);
 
 shift =0
 
