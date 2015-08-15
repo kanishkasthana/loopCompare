@@ -21,7 +21,7 @@ loopPairs=as.matrix(loopsX[,c(2,5)])
 #Optimizing Script to get a distribution of percentage values.
 
 
-percentVector=sapply(1:1000,function(val){
+percentVector=sapply(1:100,function(val){
 #Creating a distribution where we designate either the start of the end of the loop to be on the positive strand
 
 strand=sample(0:1,nrow(loopPairs),replace=TRUE)
@@ -41,15 +41,9 @@ loopBoundaries=as.vector(loopPairs)
 #Ordering boundaries in ascending order of absolute value:
 loopBoundaries=loopBoundaries[order(abs(loopBoundaries))]
 
-#Now we have the vector we want to export to test our algorithm with
-write.table(loopBoundaries,file="processedLoopBoundaries.txt",quote=FALSE, col.name=FALSE,row.names=FALSE, sep="\t")
-
-#Running First Java Algorithm Script from R.
-system("java -jar loopPrediction.jar", intern=TRUE )
-
-#Reading predicted Loops from algorithm
-predictedLoops = read.table("predictedLoopsFromLoopBoundaries.txt",header=TRUE);
-
+predictedLoops=cbind(abs(loopBoundaries[seq(1,length(loopBoundaries),by=2)]),abs(loopBoundaries[seq(2,length(loopBoundaries),by=2)]))
+predictedLoops=as.data.frame(predictedLoops)
+names(predictedLoops)<-c("START","END")
 shift =0
 
 loopsXStartRange=cbind((loopsX$x1+shift),(loopsX$x2+shift));
